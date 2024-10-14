@@ -1,0 +1,32 @@
+name: Auto Comment
+
+on:
+  issues:
+    types: [opened]
+  pull_request:
+    types: [opened, closed]
+
+permissions:
+  issues: write
+  pull-requests: write
+
+jobs:
+  run:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: wow-actions/auto-comment@v1
+        with:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          issuesOpened: |
+            @{{ author }}
+            Thank you for raising an issue. We will investigate the matter and get back to you as soon as possible.
+            Please make sure you have provided as much context as possible.
+
+          pullRequestOpened: |
+            @{{ author }}
+            Thank you for raising your pull request.
+            We will review it as soon as possible.
+
+          pullRequestClosed: |
+            @{{ author }}
+            Your pull request has been closed. Thank you for your contribution!
